@@ -1,1 +1,11 @@
+[
+    
+{"timestamp":"2026-05-06T10:10:00","event_type":"network_connection","src_ip":"192.168.1.50","dest_ip":"192.168.1.10","dest_port":3389,"protocol":"TCP","bytes_sent":5020,"bytes_received":1100,"severity":"medium","tags":["network_attack"]},
 
+{"timestamp":"2026-05-06T10:10:05","event_type":"port_scan","src_ip":"185.220.101.1","dest_ip":"192.168.1.20","dest_port":445,"protocol":"TCP","severity":"high","tags":["port_scan_detected"]},
+
+{"timestamp":"2026-05-06T10:10:10","event_type":"reverse_shell","src_ip":"192.168.1.77","dest_ip":"45.33.32.156","dest_port":4444,"protocol":"TCP","severity":"critical","tags":["possible_reverse_shell"]},
+
+{"timestamp":"2026-05-06T10:10:15","event_type":"beaconing","src_ip":"192.168.1.88","dest_ip":"91.134.182.120","dest_port":8080,"protocol":"HTTP","severity":"high","tags":["beaconing_detected","c2_activity"]}
+
+]
