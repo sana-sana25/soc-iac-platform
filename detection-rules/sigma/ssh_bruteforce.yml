@@ -1,0 +1,36 @@
+title: SSH Bruteforce Detection
+id: 9a2b1f6e-ssh-bruteforce
+status: experimental
+
+description: Detects multiple failed SSH authentication attempts indicating possible bruteforce activity.
+
+author: SOC-IAC Platform
+
+date: 2026/05/06
+
+references:
+  - https://attack.mitre.org/techniques/T1110/
+
+tags:
+  - attack.credential_access
+  - attack.t1110
+  - ssh
+  - bruteforce
+
+logsource:
+  category: authentication
+  product: linux
+
+detection:
+
+  selection:
+    message|contains:
+      - "Failed password"
+
+  condition: selection
+
+falsepositives:
+  - Mistyped passwords
+  - Internal security testing
+
+level: high

@@ -1,0 +1,21 @@
+{
+  "event_type": "ssh_bruteforce",
+  "severity": "high",
+  "mitre": "T1110",
+  "message": "Simulated SSH bruteforce attack detected",
+  "authentication_method": "password",
+  "protocol": "TCP",
+  "tags": [
+    "ssh_bruteforce_detected",
+    "credential_attack",
+    "possible_bruteforce"
+  ],
+  "fields": {
+    "src_ip": "",
+    "dest_ip": "",
+    "src_port": "",
+    "dest_port": 22,
+    "username": "",
+    "failed_attempts": ""
+  }
+}

@@ -1,0 +1,48 @@
+title: Reverse Shell Detection
+id: c4f8b7d1-reverse-shell
+status: experimental
+
+description: Detects possible reverse shell activity and suspicious command execution behavior.
+
+author: SOC-IAC Platform
+
+date: 2026/05/06
+
+references:
+  - https://attack.mitre.org/techniques/T1059/
+
+tags:
+  - attack.execution
+  - attack.t1059
+  - reverse_shell
+  - command_execution
+
+logsource:
+  category: network_connection
+  product: zeek
+
+detection:
+
+  selection_ports:
+    destination.port:
+      - 4444
+      - 5555
+      - 6666
+      - 1337
+      - 9001
+
+  selection_commands:
+    url|contains:
+      - "cmd"
+      - "powershell"
+      - "bash"
+      - "nc"
+      - "netcat"
+
+  condition: selection_ports or selection_commands
+
+falsepositives:
+  - Authorized remote administration
+  - Internal penetration testing
+
+level: critical

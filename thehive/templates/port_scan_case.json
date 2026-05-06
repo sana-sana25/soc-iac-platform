@@ -1,0 +1,26 @@
+{
+  "title": "Port Scan Detection",
+  "description": "Multiple ports were scanned from a suspicious source IP. Possible reconnaissance activity detected.",
+  "severity": 2,
+  "tlp": 2,
+  "pap": 2,
+  "tags": [
+    "port_scan",
+    "network_reconnaissance",
+    "mitre:T1046",
+    "soc_alert"
+  ],
+  "status": "New",
+  "summary": "Potential network service scanning activity detected by Zeek and SOC rules.",
+  "customFields": {
+    "attack_type": {
+      "string": "port_scan"
+    },
+    "mitre_technique": {
+      "string": "T1046"
+    },
+    "source": {
+      "string": "Zeek"
+    }
+  }
+}

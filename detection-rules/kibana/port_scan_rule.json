@@ -1,0 +1,57 @@
+{
+  "name": "SOC - Port Scan Detection",
+  "rule_id": "soc-port-scan-detection",
+  "description": "Detects possible network port scanning activity from a single source IP.",
+  "enabled": true,
+  "risk_score": 70,
+  "severity": "high",
+  "type": "query",
+  "language": "kuery",
+  "index": [
+    "zeek-*",
+    "soc-simulated-*"
+  ],
+  "query": "tags : \"port_scan_detected\" OR tags : \"suspicious_port_activity\"",
+  "from": "now-5m",
+  "interval": "1m",
+  "max_signals": 100,
+  "tags": [
+    "SOC",
+    "Network",
+    "Port Scan",
+    "MITRE ATT&CK",
+    "T1046"
+  ],
+  "references": [
+    "https://attack.mitre.org/techniques/T1046/"
+  ],
+  "author": [
+    "SOC-IAC Platform"
+  ],
+  "false_positives": [
+    "Authorized vulnerability scans",
+    "Internal security assessments"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0007",
+        "name": "Discovery",
+        "reference": "https://attack.mitre.org/tactics/TA0007/"
+      },
+      "technique": [
+        {
+          "id": "T1046",
+          "name": "Network Service Scanning",
+          "reference": "https://attack.mitre.org/techniques/T1046/"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "exceptions_list": [],
+  "immutable": false,
+  "setup": "Ensure Zeek logs or simulated attack logs are ingested into Elasticsearch.",
+  "license": "Elastic License v2"
+}

@@ -1,0 +1,21 @@
+{
+  "event_type": "reverse_shell",
+  "severity": "critical",
+  "mitre": "T1059",
+  "message": "Simulated reverse shell activity detected",
+  "shell_type": "bash",
+  "protocol": "TCP",
+  "tags": [
+    "reverse_shell_detected",
+    "critical_attack",
+    "possible_reverse_shell"
+  ],
+  "fields": {
+    "src_ip": "",
+    "dest_ip": "",
+    "src_port": "",
+    "dest_port": 4444,
+    "command": "",
+    "connection_duration": ""
+  }
+}

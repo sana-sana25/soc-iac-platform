@@ -1,0 +1,32 @@
+# =========================================================
+# LOGSTASH PIPELINES
+# SOC-IAC PLATFORM
+# =========================================================
+
+# =========================================================
+# SIMULATED ATTACK LOGS
+# =========================================================
+
+- pipeline.id: simulated-logs
+  path.config: "/usr/share/logstash/pipeline/simulated.conf"
+
+# =========================================================
+# ZEEK NETWORK LOGS
+# =========================================================
+
+- pipeline.id: zeek-logs
+  path.config: "/usr/share/logstash/pipeline/zeek.conf"
+
+# =========================================================
+# LINUX AUTH LOGS
+# =========================================================
+
+- pipeline.id: auth-logs
+  path.config: "/usr/share/logstash/pipeline/auth.conf"
+
+# =========================================================
+# ALERT PROCESSING
+# =========================================================
+
+- pipeline.id: alerts
+  path.config: "/usr/share/logstash/pipeline/alerts.conf"

@@ -1,0 +1,27 @@
+{
+  "title": "Reverse Shell Activity",
+  "description": "Suspicious outbound connection and command execution behavior indicate possible reverse shell activity.",
+  "severity": 4,
+  "tlp": 3,
+  "pap": 3,
+  "tags": [
+    "reverse_shell",
+    "command_execution",
+    "critical_attack",
+    "mitre:T1059",
+    "soc_alert"
+  ],
+  "status": "New",
+  "summary": "Potential compromise detected through reverse shell communication.",
+  "customFields": {
+    "attack_type": {
+      "string": "reverse_shell"
+    },
+    "mitre_technique": {
+      "string": "T1059"
+    },
+    "source": {
+      "string": "Zeek"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "title": "DNS Tunneling Activity",
+  "description": "Suspicious DNS requests and long encoded subdomains indicate possible DNS tunneling or data exfiltration.",
+  "severity": 3,
+  "tlp": 2,
+  "pap": 2,
+  "tags": [
+    "dns",
+    "dns_tunnel",
+    "exfiltration",
+    "mitre:T1071.004",
+    "soc_alert"
+  ],
+  "status": "New",
+  "summary": "Potential DNS tunneling activity detected in monitored traffic.",
+  "customFields": {
+    "attack_type": {
+      "string": "dns_tunnel"
+    },
+    "mitre_technique": {
+      "string": "T1071.004"
+    },
+    "source": {
+      "string": "Zeek DNS Logs"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "event_type": "dns_tunnel",
+  "severity": "high",
+  "mitre": "T1071.004",
+  "message": "Simulated DNS tunneling activity detected",
+  "protocol": "UDP",
+  "dns_record_type": "TXT",
+  "tags": [
+    "dns_tunnel_detected",
+    "possible_dns_tunnel",
+    "exfiltration_attempt"
+  ],
+  "fields": {
+    "src_ip": "",
+    "dest_ip": "",
+    "src_port": "",
+    "dest_port": 53,
+    "dns_query": "",
+    "query_length": ""
+  }
+}

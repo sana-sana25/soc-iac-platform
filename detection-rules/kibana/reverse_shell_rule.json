@@ -1,0 +1,57 @@
+{
+  "name": "SOC - Reverse Shell Detection",
+  "rule_id": "soc-reverse-shell-detection",
+  "description": "Detects possible reverse shell activity, suspicious outbound connections, and command execution behavior.",
+  "enabled": true,
+  "risk_score": 95,
+  "severity": "critical",
+  "type": "query",
+  "language": "kuery",
+  "index": [
+    "zeek-*",
+    "soc-simulated-*"
+  ],
+  "query": "tags : \"possible_reverse_shell\" OR tags : \"reverse_shell_detected\" OR tags : \"critical_attack\"",
+  "from": "now-5m",
+  "interval": "1m",
+  "max_signals": 100,
+  "tags": [
+    "SOC",
+    "Reverse Shell",
+    "Command and Control",
+    "MITRE ATT&CK",
+    "T1059"
+  ],
+  "references": [
+    "https://attack.mitre.org/techniques/T1059/"
+  ],
+  "author": [
+    "SOC-IAC Platform"
+  ],
+  "false_positives": [
+    "Authorized remote administration tools",
+    "Internal testing environments"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0002",
+        "name": "Execution",
+        "reference": "https://attack.mitre.org/tactics/TA0002/"
+      },
+      "technique": [
+        {
+          "id": "T1059",
+          "name": "Command and Scripting Interpreter",
+          "reference": "https://attack.mitre.org/techniques/T1059/"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "exceptions_list": [],
+  "immutable": false,
+  "setup": "Ensure Zeek logs or simulated reverse shell events are ingested into Elasticsearch.",
+  "license": "Elastic License v2"
+}

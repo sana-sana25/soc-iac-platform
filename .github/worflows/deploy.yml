@@ -1,0 +1,97 @@
+name: SOC-IAC Deployment Pipeline
+
+# =========================================================
+# TRIGGERS
+# =========================================================
+
+on:
+
+  workflow_dispatch:
+
+# =========================================================
+# JOBS
+# =========================================================
+
+jobs:
+
+  deploy-local-soc:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ===================================================
+      # CHECKOUT
+      # ===================================================
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ===================================================
+      # DOCKER
+      # ===================================================
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # ===================================================
+      # START STACK
+      # ===================================================
+
+      - name: Start SOC stack
+        run: |
+          docker compose up -d
+
+      # ===================================================
+      # WAIT SERVICES
+      # ===================================================
+
+      - name: Wait for services
+        run: |
+          sleep 60
+
+      # ===================================================
+      # CREATE INDEXES
+      # ===================================================
+
+      - name: Create Elasticsearch indexes
+        run: |
+          chmod +x scripts/create-indexes.sh
+          ./scripts/create-indexes.sh
+
+      # ===================================================
+      # IMPORT RULES
+      # ===================================================
+
+      - name: Import Kibana rules
+        run: |
+          chmod +x scripts/import-rules.sh
+          ./scripts/import-rules.sh
+
+      # ===================================================
+      # START ATTACK GENERATOR
+      # ===================================================
+
+      - name: Start attack generator
+        run: |
+          chmod +x scripts/start-generator.sh
+          nohup ./scripts/start-generator.sh &
+
+      # ===================================================
+      # HEALTHCHECK
+      # ===================================================
+
+      - name: Run healthcheck
+        run: |
+          chmod +x scripts/healthcheck.sh
+          ./scripts/healthcheck.sh
+
+      # ===================================================
+      # FINAL STATUS
+      # ===================================================
+
+      - name: Deployment completed
+        run: |
+          echo "=================================="
+          echo " SOC-IAC DEPLOYMENT SUCCESSFUL "
+          echo "=================================="

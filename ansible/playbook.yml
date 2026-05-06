@@ -1,0 +1,173 @@
+---
+# =========================================================
+# SOC-IAC PLATFORM
+# MAIN ANSIBLE PLAYBOOK
+# =========================================================
+
+- name: Deploy SOC-IAC Platform
+  hosts: soc_servers
+  become: true
+
+  vars:
+
+    project_path: "/opt/soc-iac-platform"
+
+  tasks:
+
+    # =====================================================
+    # SYSTEM UPDATE
+    # =====================================================
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # =====================================================
+    # INSTALL PACKAGES
+    # =====================================================
+
+    - name: Install required packages
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - python3
+          - python3-pip
+          - curl
+          - git
+        state: present
+
+    # =====================================================
+    # ENABLE DOCKER
+    # =====================================================
+
+    - name: Enable Docker service
+      service:
+        name: docker
+        enabled: yes
+        state: started
+
+    # =====================================================
+    # CREATE PROJECT DIRECTORY
+    # =====================================================
+
+    - name: Create project directory
+      file:
+        path: "{{ project_path }}"
+        state: directory
+        mode: '0755'
+
+    # =====================================================
+    # COPY PROJECT FILES
+    # =====================================================
+
+    - name: Copy SOC project files
+      copy:
+        src: "../"
+        dest: "{{ project_path }}"
+        mode: preserve
+
+    # =====================================================
+    # CREATE LOG DIRECTORIES
+    # =====================================================
+
+    - name: Create simulated logs directory
+      file:
+        path: "{{ project_path }}/simulated_logs"
+        state: directory
+        mode: '0755'
+
+    # =====================================================
+    # CREATE EMPTY LOG FILES
+    # =====================================================
+
+    - name: Create simulated log files
+      file:
+        path: "{{ item }}"
+        state: touch
+        mode: '0644'
+      loop:
+        - "{{ project_path }}/simulated_logs/attacks.json"
+        - "{{ project_path }}/simulated_logs/auth_events.json"
+        - "{{ project_path }}/simulated_logs/network_events.json"
+        - "{{ project_path }}/simulated_logs/dns_events.json"
+
+    # =====================================================
+    # START DOCKER SERVICES
+    # =====================================================
+
+    - name: Start Docker containers
+      shell: |
+        docker compose up -d
+      args:
+        chdir: "{{ project_path }}"
+
+    # =====================================================
+    # WAIT FOR SERVICES
+    # =====================================================
+
+    - name: Wait for Elasticsearch
+      wait_for:
+        host: localhost
+        port: 9200
+        timeout: 120
+
+    - name: Wait for Kibana
+      wait_for:
+        host: localhost
+        port: 5601
+        timeout: 180
+
+    # =====================================================
+    # CREATE INDEXES
+    # =====================================================
+
+    - name: Run create-indexes script
+      shell: |
+        ./scripts/create-indexes.sh
+      args:
+        chdir: "{{ project_path }}"
+
+    # =====================================================
+    # IMPORT RULES
+    # =====================================================
+
+    - name: Import Kibana rules
+      shell: |
+        ./scripts/import-rules.sh
+      args:
+        chdir: "{{ project_path }}"
+
+    # =====================================================
+    # START ATTACK GENERATOR
+    # =====================================================
+
+    - name: Start attack generator
+      shell: |
+        nohup ./scripts/start-generator.sh > generator.log 2>&1 &
+      args:
+        chdir: "{{ project_path }}"
+
+    # =====================================================
+    # HEALTHCHECK
+    # =====================================================
+
+    - name: Run healthcheck
+      shell: |
+        ./scripts/healthcheck.sh
+      args:
+        chdir: "{{ project_path }}"
+
+    # =====================================================
+    # FINAL MESSAGE
+    # =====================================================
+
+    - name: Deployment completed
+      debug:
+        msg:
+          - "========================================"
+          - " SOC-IAC PLATFORM DEPLOYED SUCCESSFULLY "
+          - "========================================"
+          - "Kibana  : http://localhost:5601"
+          - "TheHive : http://localhost:9000"
+          - "Cortex  : http://localhost:9001"

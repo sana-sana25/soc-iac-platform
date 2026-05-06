@@ -1,0 +1,27 @@
+{
+  "title": "SSH Bruteforce Attack",
+  "description": "Multiple failed SSH authentication attempts detected from a suspicious IP address.",
+  "severity": 3,
+  "tlp": 2,
+  "pap": 2,
+  "tags": [
+    "ssh",
+    "bruteforce",
+    "credential_access",
+    "mitre:T1110",
+    "soc_alert"
+  ],
+  "status": "New",
+  "summary": "Possible SSH bruteforce attack detected against Linux infrastructure.",
+  "customFields": {
+    "attack_type": {
+      "string": "ssh_bruteforce"
+    },
+    "mitre_technique": {
+      "string": "T1110"
+    },
+    "source": {
+      "string": "AuthLogs/Zeek"
+    }
+  }
+}

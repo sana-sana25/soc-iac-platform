@@ -1,0 +1,130 @@
+version: '3.9'
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    container_name: elasticsearch
+
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+
+    ports:
+      - "9200:9200"
+
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+      - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.12.2
+    container_name: kibana
+
+    depends_on:
+      - elasticsearch
+
+    ports:
+      - "5601:5601"
+
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+
+    volumes:
+      - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.12.2
+    container_name: logstash
+
+    depends_on:
+      - elasticsearch
+
+    ports:
+      - "5044:5044"
+      - "5000:5000"
+
+    environment:
+      LS_JAVA_OPTS: "-Xms1g -Xmx1g"
+
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/patterns:/usr/share/logstash/patterns
+      - ./simulated_logs:/var/log/simulated_logs
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+  thehive:
+    image: strangebee/thehive:5
+    container_name: thehive
+
+    depends_on:
+      - elasticsearch
+
+    ports:
+      - "9000:9000"
+
+    environment:
+      - JVM_OPTS=-Xms1g -Xmx1g
+
+    volumes:
+      - ./docker/thehive/application.conf:/etc/thehive/application.conf
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+  cortex:
+    image: thehiveproject/cortex:3.1.7
+    container_name: cortex
+
+    depends_on:
+      - elasticsearch
+
+    ports:
+      - "9001:9001"
+
+    environment:
+      - JOB_DIRECTORY=/tmp/cortex-jobs
+
+    volumes:
+      - ./docker/cortex/application.conf:/etc/cortex/application.conf
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+networks:
+  soc-network:
+    driver: bridge
+
+
+
+volumes:
+  elasticsearch_data:

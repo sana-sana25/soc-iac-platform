@@ -1,0 +1,57 @@
+{
+  "name": "SOC - DNS Tunnel Detection",
+  "rule_id": "soc-dns-tunnel-detection",
+  "description": "Detects suspicious DNS tunneling activity and abnormal DNS behavior.",
+  "enabled": true,
+  "risk_score": 85,
+  "severity": "high",
+  "type": "query",
+  "language": "kuery",
+  "index": [
+    "zeek-*",
+    "soc-simulated-*"
+  ],
+  "query": "tags : \"possible_dns_tunnel\" OR tags : \"dns_tunnel_detected\"",
+  "from": "now-5m",
+  "interval": "1m",
+  "max_signals": 100,
+  "tags": [
+    "SOC",
+    "DNS",
+    "Exfiltration",
+    "MITRE ATT&CK",
+    "T1071.004"
+  ],
+  "references": [
+    "https://attack.mitre.org/techniques/T1071/004/"
+  ],
+  "author": [
+    "SOC-IAC Platform"
+  ],
+  "false_positives": [
+    "Internal DNS stress testing",
+    "Legitimate high-volume DNS applications"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0011",
+        "name": "Command and Control",
+        "reference": "https://attack.mitre.org/tactics/TA0011/"
+      },
+      "technique": [
+        {
+          "id": "T1071.004",
+          "name": "DNS",
+          "reference": "https://attack.mitre.org/techniques/T1071/004/"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "exceptions_list": [],
+  "immutable": false,
+  "setup": "Ensure Zeek DNS logs or simulated DNS attack logs are ingested into Elasticsearch.",
+  "license": "Elastic License v2"
+}

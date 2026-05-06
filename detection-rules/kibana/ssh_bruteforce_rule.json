@@ -1,0 +1,60 @@
+{
+  "name": "SOC - SSH Bruteforce Detection",
+  "rule_id": "soc-ssh-bruteforce-detection",
+  "description": "Detects multiple failed SSH authentication attempts and possible bruteforce attacks.",
+  "enabled": true,
+  "risk_score": 80,
+  "severity": "high",
+  "type": "query",
+  "language": "kuery",
+  "index": [
+    "linux-auth-*",
+    "zeek-*",
+    "soc-simulated-*"
+  ],
+  "query": "tags : \"possible_bruteforce\" OR tags : \"ssh_bruteforce_detected\"",
+  "from": "now-5m",
+  "interval": "1m",
+  "max_signals": 100,
+  "tags": [
+    "SOC",
+    "SSH",
+    "Bruteforce",
+    "Credential Access",
+    "MITRE ATT&CK",
+    "T1110"
+  ],
+  "references": [
+    "https://attack.mitre.org/techniques/T1110/"
+  ],
+  "author": [
+    "SOC-IAC Platform"
+  ],
+  "false_positives": [
+    "Authorized penetration testing",
+    "Internal security assessments",
+    "Misconfigured automation scripts"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "reference": "https://attack.mitre.org/tactics/TA0006/"
+      },
+      "technique": [
+        {
+          "id": "T1110",
+          "name": "Brute Force",
+          "reference": "https://attack.mitre.org/techniques/T1110/"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "exceptions_list": [],
+  "immutable": false,
+  "setup": "Ensure Linux auth logs, Zeek logs, or simulated SSH attack logs are ingested into Elasticsearch.",
+  "license": "Elastic License v2"
+}

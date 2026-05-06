@@ -1,0 +1,42 @@
+title: Suspicious DNS Activity Detection
+id: d5a8c9f2-suspicious-dns
+status: experimental
+
+description: Detects suspicious DNS tunneling behavior and anomalous DNS requests.
+
+author: SOC-IAC Platform
+
+date: 2026/05/06
+
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+
+tags:
+  - attack.command_and_control
+  - attack.t1071.004
+  - dns
+  - exfiltration
+
+logsource:
+  category: dns
+  product: zeek
+
+detection:
+
+  long_query:
+    query|re: '.{50,}'
+
+  suspicious_domain:
+    query|contains:
+      - "base64"
+      - "encode"
+      - "tunnel"
+      - "data"
+
+  condition: long_query or suspicious_domain
+
+falsepositives:
+  - Legitimate large DNS queries
+  - Internal DNS testing
+
+level: high

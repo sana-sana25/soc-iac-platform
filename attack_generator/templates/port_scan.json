@@ -1,0 +1,19 @@
+{
+  "event_type": "port_scan",
+  "severity": "medium",
+  "mitre": "T1046",
+  "message": "Simulated port scan activity detected",
+  "scan_type": "SYN_SCAN",
+  "protocol": "TCP",
+  "tags": [
+    "port_scan_detected",
+    "network_attack"
+  ],
+  "fields": {
+    "src_ip": "",
+    "dest_ip": "",
+    "src_port": "",
+    "dest_port": "",
+    "scanned_ports": ""
+  }
+}
