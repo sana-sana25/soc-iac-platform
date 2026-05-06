@@ -1,1 +1,9 @@
+[
+{"event_id":"1","timestamp":"2026-05-06T10:00:00","event_type":"port_scan","src_ip":"185.220.101.1","dest_ip":"192.168.1.10","src_port":52344,"dest_port":80,"severity":"medium","mitre":"T1046","message":"Simulated port scan detected","scanned_ports":120,"tags":["port_scan_detected","network_attack"]},
 
+{"event_id":"2","timestamp":"2026-05-06T10:00:05","event_type":"ssh_bruteforce","src_ip":"45.155.205.233","dest_ip":"192.168.1.20","src_port":44321,"dest_port":22,"severity":"high","mitre":"T1110","message":"Simulated SSH bruteforce attack","failed_attempts":35,"username":"root","tags":["ssh_bruteforce_detected","possible_bruteforce"]},
+
+{"event_id":"3","timestamp":"2026-05-06T10:00:10","event_type":"reverse_shell","src_ip":"192.168.1.77","dest_ip":"185.220.101.1","src_port":41233,"dest_port":4444,"severity":"critical","mitre":"T1059","message":"Simulated reverse shell detected","shell_type":"bash","tags":["reverse_shell_detected","critical_attack"]},
+
+{"event_id":"4","timestamp":"2026-05-06T10:00:15","event_type":"dns_tunnel","src_ip":"192.168.1.99","dest_ip":"8.8.8.8","src_port":53000,"dest_port":53,"severity":"high","mitre":"T1071.004","message":"Simulated DNS tunneling activity","dns_query":"verylongbase64encodedsubdomain.malicious.com","tags":["dns_tunnel_detected","possible_dns_tunnel"]}
+]
