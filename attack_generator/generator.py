@@ -15,7 +15,7 @@ from datetime import datetime
 # CONFIGURATION
 # =========================================================
 
-LOG_FILE = "../simulated_logs/attacks.json"
+LOG_FILE = "simulated_logs/attacks.json"
 
 EVENT_INTERVAL = 3
 
