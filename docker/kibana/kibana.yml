@@ -61,8 +61,8 @@ kibana.defaultAppId: "dashboard"
 # CORS
 # =========================================================
 
-server.cors.enabled: true
-server.cors.allowOrigin: ["*"]
+#server.cors.enabled: true
+#server.cors.allowOrigin: ["*"]
 
 # =========================================================
 # PERFORMANCE
@@ -74,7 +74,7 @@ ops.interval: 5000
 # TIMEZONE
 # =========================================================
 
-dateFormat:tz: "Africa/Casablanca"
+"dateFormat:tz:" "Africa/Casablanca"
 
 # =========================================================
 # INDEX SETTINGS
