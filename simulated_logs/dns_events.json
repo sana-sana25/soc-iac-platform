@@ -1,1 +1,11 @@
+[
 
+{"timestamp":"2026-05-06T10:15:00","event_type":"dns_query","src_ip":"192.168.1.99","dest_ip":"8.8.8.8","query":"google.com","query_length":10,"severity":"low","tags":["dns_activity"]},
+
+{"timestamp":"2026-05-06T10:15:05","event_type":"dns_tunnel","src_ip":"10.10.10.90","dest_ip":"1.1.1.1","query":"verylongbase64encodedsubdomain123456.malicious.com","query_length":58,"severity":"high","tags":["possible_dns_tunnel","dns_tunnel_detected"]},
+
+{"timestamp":"2026-05-06T10:15:10","event_type":"dns_tunnel","src_ip":"172.16.1.55","dest_ip":"8.8.8.8","query":"dataexfiltrationpayload.malicious-tunnel-domain.com","query_length":62,"severity":"high","tags":["exfiltration_attempt","dns_tunnel_detected"]},
+
+{"timestamp":"2026-05-06T10:15:15","event_type":"dns_query","src_ip":"192.168.1.22","dest_ip":"8.8.4.4","query":"openai.com","query_length":10,"severity":"low","tags":["dns_activity"]}
+
+]
