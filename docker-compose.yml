@@ -37,9 +37,7 @@ services:
     ports:
       - "5601:5601"
 
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-      xpack.security.enabled: false
+    
 
     volumes:
       - ./docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
