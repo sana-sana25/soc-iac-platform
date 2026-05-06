@@ -22,7 +22,7 @@ elasticsearch.hosts:
 # SECURITY
 # =========================================================
 
-xpack.security.enabled: false
+
 
 # =========================================================
 # MONITORING
