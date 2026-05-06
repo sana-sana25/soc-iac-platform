@@ -57,8 +57,6 @@ esdata/
 logs/
 *.log
 
-# Simulated generated logs
-simulated_logs/*.json
 
 # Zeek runtime logs
 zeek/logs/
