@@ -133,6 +133,7 @@ services:
 
     volumes:
       - ./docker/thehive/application.conf:/etc/thehive/application.conf
+      - ./thehive-data:/opt/thp/thehive/files
 
     networks:
       - soc-network
