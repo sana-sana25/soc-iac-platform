@@ -172,3 +172,4 @@ networks:
 
 volumes:
   elasticsearch_data:
+  minio_data:
