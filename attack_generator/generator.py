@@ -17,7 +17,7 @@ from datetime import datetime
 
 LOG_FILE = "simulated_logs/attacks.json"
 
-EVENT_INTERVAL = 3
+EVENT_INTERVAL = 15
 
 # =========================================================
 # SAMPLE DATA
