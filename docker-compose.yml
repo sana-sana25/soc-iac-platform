@@ -74,12 +74,56 @@ services:
 
 
 
+  cassandra:
+    image: cassandra:4.0
+    container_name: cassandra
+
+    environment:
+      - CASSANDRA_CLUSTER_NAME=thp
+      - MAX_HEAP_SIZE=1G
+      - HEAP_NEWSIZE=200M
+
+    ports:
+      - "9042:9042"
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
+  minio:
+    image: minio/minio
+    container_name: minio
+
+    command: server /data
+
+    environment:
+      - MINIO_ROOT_USER=thehive
+      - MINIO_ROOT_PASSWORD=supersecret
+
+    ports:
+      - "9002:9000"
+
+    volumes:
+      - minio_data:/data
+
+    networks:
+      - soc-network
+
+    restart: unless-stopped
+
+
+
   thehive:
     image: strangebee/thehive:5
     container_name: thehive
 
     depends_on:
+      - cassandra
       - elasticsearch
+      - minio
 
     ports:
       - "9000:9000"
